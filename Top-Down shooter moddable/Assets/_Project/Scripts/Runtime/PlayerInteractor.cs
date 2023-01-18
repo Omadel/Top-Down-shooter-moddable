@@ -18,27 +18,33 @@ public class PlayerInteractor : MonoBehaviour
 
         var offset = this.offset;
         if (renderer.flipX) offset *= -1;
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position + (Vector3)offset, range, Vector3.up);
-        int interactionCount = 0;
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position + (Vector3)offset, range, Vector3.forward);
+        int interactionsCount = 0;
+        int interactableCount = 0;
         foreach (var hit in hits)
         {
             GameObject go = hit.collider.gameObject;
             if (go == gameObject) continue;
             if (!go.TryGetComponent(out IInteractable interactable)) continue;
+            interactionsCount++;
             if (!interactable.IsInteractable) continue;
-            interactionCount++;
+            interactableCount++;
             if (interactable == selectedInteractable) continue;
             selectedInteractable?.HideInteraction();
             selectedInteractable = interactable;
             selectedInteractable.ShowInteraction();
         }
-        if (interactionCount == 0)
+        if (interactableCount == 0)
         {
             selectedInteractable?.HideInteraction();
             selectedInteractable = null;
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
+            if (interactionsCount == 0 && GameManager.Instance.Player.IsTransporting)
+            {
+                GameManager.Instance.Player.PutDown(transform.position + (Vector3)offset);
+            }
             selectedInteractable?.Interact();
             selectedInteractable = null;
         }

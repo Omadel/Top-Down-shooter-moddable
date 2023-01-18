@@ -37,3 +37,7 @@ MonoBehaviour:
     animation: {fileID: 11400000, guid: 9021cf92c67cbec47a7b6d6a0b39ad9c, type: 2}
     isLooping: 0
     outStateName: Idle
+  - name: Carry
+    animation: {fileID: 11400000, guid: a5bfcb7d4a38dc34bbf5df6b44247e63, type: 2}
+    isLooping: 1
+    outStateName: 
