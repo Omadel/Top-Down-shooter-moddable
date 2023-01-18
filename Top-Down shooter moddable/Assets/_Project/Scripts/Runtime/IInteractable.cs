@@ -4,4 +4,5 @@
     void ShowInteraction();
     void HideInteraction();
     void Interact();
+    void OnInteractionEnded();
 }
