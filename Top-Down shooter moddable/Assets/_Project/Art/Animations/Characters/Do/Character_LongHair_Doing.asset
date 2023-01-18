@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a917b4899246f640aa93e6c450c1e11, type: 3}
+  m_Name: Character_LongHair_Doing
+  m_EditorClassIdentifier: 
+  fps: 12
+  sprites: []
+  animationLayers:
+  - {fileID: 11400000, guid: d99030062d6b2ae478a9bfa2c8d053dd, type: 2}
+  - {fileID: 11400000, guid: eb8dda303571dc54bbd22bd6fc5c68a4, type: 2}
+  - {fileID: 11400000, guid: 0d654b6c595708648a857efc15ca802e, type: 2}

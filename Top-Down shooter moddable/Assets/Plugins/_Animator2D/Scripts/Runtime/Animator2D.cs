@@ -105,7 +105,9 @@ namespace Etienne.Animator2D
                 {
                     Transform go = new GameObject($"AnimationLayer ({i})").transform;
                     go.SetParent(transform);
-                    go.SetPositionAndRotation(transform.position, transform.rotation);
+                    go.rotation = transform.rotation;
+                    go.localPosition = Vector3.zero;
+                    go.localScale = Vector3.one;
                     renderers.Add(go.gameObject.AddComponent<SpriteRenderer>());
                 }
                 var orderInLayer = renderers[0].sortingOrder;
