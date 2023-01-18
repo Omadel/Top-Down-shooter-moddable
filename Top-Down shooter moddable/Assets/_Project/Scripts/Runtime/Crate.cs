@@ -1,10 +1,15 @@
 using UnityEngine;
 
-public class Crate : Transportable
+public class Crate : Transportable, ISellable
 {
     public override bool IsInteractable => isInteractable;
 
+    public int value => v;
+
+    public int vegetableCount => fruitAmount;
+
     [SerializeField] int fruitAmount = 0;
+    [SerializeField] int v;
     [SerializeField] Fruit fruit;
 
     SpriteRenderer[] renderers;
@@ -24,6 +29,7 @@ public class Crate : Transportable
             player.PutDown(transform.position);
             renderers[1].sprite = fruit.FruitSprite;
             this.fruit = fruit;
+            v = fruit.Value;
             fruitAmount++;
             GameObject.Destroy(fruit.gameObject);
         }
@@ -47,5 +53,16 @@ public class Crate : Transportable
         {
             renderers[i].sortingOrder = baseOrder + i;
         }
+    }
+
+    public void Sell(int vegetableAmount, int vegetableValue)
+    {
+
+        GameManager.Instance.Gold += vegetableValue * vegetableCount;
+    }
+
+    public void EmptyBox()
+    {
+        v = 0;
     }
 }

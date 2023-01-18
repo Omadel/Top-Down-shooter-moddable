@@ -19,6 +19,7 @@ public class Soil : MonoBehaviour, IInteractable
     [SerializeField] Sprite normalSprite, dugSprite;
     [SerializeField] SpriteRenderer fruitRenderer;
 
+    bool isDug = false;
     bool isInteractable = true;
     new SpriteRenderer renderer;
 
@@ -80,6 +81,7 @@ public class Soil : MonoBehaviour, IInteractable
     {
         renderer.sprite = normalSprite;
         isInteractable = true;
+        isDug = false;
         //todo spawn fuit
     }
 
@@ -91,6 +93,7 @@ public class Soil : MonoBehaviour, IInteractable
 
     public void OnInteractionEnded()
     {
+        isDug = true;
         renderer.sprite = dugSprite;
     }
 }
