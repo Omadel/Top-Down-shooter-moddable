@@ -32,8 +32,9 @@ public class DayManager : Singleton<DayManager>
         SliderDay.value = timer / DayTime;
         if (SliderDay.value == 1)
         {
-            timer = 0f;
+            timer -= DayTime;
             NewDay();
+            return;
         }
         if(SliderDay.value>0.5f && DeliveryDone ==false)
         {
@@ -59,6 +60,7 @@ public class DayManager : Singleton<DayManager>
         Debug.Log("New day");
         DeliveryDone = false;
         DayCount++;
+
     }
     void MidDay()
     {
