@@ -58,7 +58,7 @@ public class EnemyController : MonoBehaviour, IHitable, IDestroyable
 
             if (Animator.CurrentFrameIndex == 5)
             {
-                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position + (Vector3)offset, WeaponRadius, Vector3.up);
+                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position + (Vector3)offset, WeaponRadius, Vector3.forward);
                 for (int i = 0; i < hits.Length; i++)
                 {
                     var hit = hits[i];
@@ -130,9 +130,9 @@ public class EnemyController : MonoBehaviour, IHitable, IDestroyable
     {
         Vector2 position = Application.isPlaying ? StartPosition : transform.position;
         UnityEditor.Handles.DrawWireArc(position, Vector3.forward, Vector3.up, 360, RandomRange);
-        UnityEditor.Handles.DrawWireArc(transform.position, Vector3.forward, Vector3.up, 360, PlayerRange);
-        UnityEditor.Handles.DrawWireArc(transform.position, Vector3.forward, Vector3.up, 360, AttackRange);
-        UnityEditor.Handles.DrawWireArc(transform.position + (Vector3)offset, Vector3.forward, Vector3.up, 360, WeaponRadius);
+        UnityEditor.Handles.DrawWireArc(transform.position, Vector3.forward, Vector3.forward, 360, PlayerRange);
+        UnityEditor.Handles.DrawWireArc(transform.position, Vector3.forward, Vector3.forward, 360, AttackRange);
+        UnityEditor.Handles.DrawWireArc(transform.position + (Vector3)offset, Vector3.forward, Vector3.forward, 360, WeaponRadius);
     }
 #endif
 

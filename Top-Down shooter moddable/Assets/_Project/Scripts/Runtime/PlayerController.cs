@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, IHitable, IDestroyable
             {
                 
                 
-                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position + (Vector3)offsetWeapon , WeaponRadius, Vector3.up);
+                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position + (Vector3)offsetWeapon , WeaponRadius, Vector3.forward);
                 for (int i = 0; i < hits.Length; i++)
                 {
                     var hit = hits[i];
