@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 257783752}
   - component: {fileID: 257783751}
   - component: {fileID: 257783750}
+  - component: {fileID: 257783754}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -286,6 +287,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 5
   Animator: {fileID: 257783751}
+  WeaponRadius: 0.4
+  WeaponDamage: 5
+  WeaponPositionOffset: {x: 0.25, y: 0.15}
+  startHealth: 20
+  Renderer: {fileID: 0}
 --- !u!114 &257783751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +374,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &257783754
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257783749}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.00000019868214, y: 0.010892798}
+  m_Size: {x: 0.21465887, y: 0.32358617}
+  m_Direction: 0
 --- !u!1 &790960538
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,6 +664,7 @@ GameObject:
   - component: {fileID: 1740190732}
   - component: {fileID: 1740190731}
   - component: {fileID: 1740190730}
+  - component: {fileID: 1740190734}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -661,6 +684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40cabd58fc972b48b4b081d74d83fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startHealth: 10
   Speed: 4
   RandomRange: 5
   PlayerRange: 1
@@ -669,6 +693,10 @@ MonoBehaviour:
   IsMoving: 0
   TargetPosition: {x: 0, y: 0}
   StartPosition: {x: 0, y: 0}
+  WeaponRadius: 0.25
+  WeaponDamage: 5
+  WeaponPositionOffset: {x: 0.35, y: 0.15}
+  Renderer: {fileID: 0}
   State: 0
 --- !u!114 &1740190731
 MonoBehaviour:
@@ -750,3 +778,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1740190734
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740190729}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0065356493, y: 0.0065356493}
+  m_Size: {x: 0.2320869, y: 0.3105147}
+  m_Direction: 0
