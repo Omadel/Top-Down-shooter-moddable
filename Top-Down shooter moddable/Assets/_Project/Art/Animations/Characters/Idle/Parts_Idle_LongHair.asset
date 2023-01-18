@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289bc996b5dd9d54d8eef48bb17a3e1e, type: 3}
+  m_Name: Parts_Idle_LongHair
+  m_EditorClassIdentifier: 
+  fps: 12
+  sprites:
+  - {fileID: 1929583489, guid: 6d61519255d5e484095c6189053760bd, type: 3}
+  - {fileID: -932453523, guid: 6d61519255d5e484095c6189053760bd, type: 3}
+  - {fileID: -928893106, guid: 6d61519255d5e484095c6189053760bd, type: 3}
+  - {fileID: 1963385168, guid: 6d61519255d5e484095c6189053760bd, type: 3}
+  - {fileID: -1641199308, guid: 6d61519255d5e484095c6189053760bd, type: 3}
+  - {fileID: -1355458831, guid: 6d61519255d5e484095c6189053760bd, type: 3}
+  - {fileID: 1919999209, guid: 6d61519255d5e484095c6189053760bd, type: 3}
+  - {fileID: -1105234389, guid: 6d61519255d5e484095c6189053760bd, type: 3}
+  - {fileID: 1604410728, guid: 6d61519255d5e484095c6189053760bd, type: 3}

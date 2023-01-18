@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289bc996b5dd9d54d8eef48bb17a3e1e, type: 3}
+  m_Name: Parts_Walk_LongHair
+  m_EditorClassIdentifier: 
+  fps: 12
+  sprites:
+  - {fileID: 1751779703, guid: 131b9e48161d4934196b3a74f47231d3, type: 3}
+  - {fileID: 376085688, guid: 131b9e48161d4934196b3a74f47231d3, type: 3}
+  - {fileID: -326306196, guid: 131b9e48161d4934196b3a74f47231d3, type: 3}
+  - {fileID: -598354511, guid: 131b9e48161d4934196b3a74f47231d3, type: 3}
+  - {fileID: 285269698, guid: 131b9e48161d4934196b3a74f47231d3, type: 3}
+  - {fileID: 1129185038, guid: 131b9e48161d4934196b3a74f47231d3, type: 3}
+  - {fileID: 1944585720, guid: 131b9e48161d4934196b3a74f47231d3, type: 3}
+  - {fileID: -76023242, guid: 131b9e48161d4934196b3a74f47231d3, type: 3}

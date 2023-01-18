@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289bc996b5dd9d54d8eef48bb17a3e1e, type: 3}
+  m_Name: Goblin_Attack
+  m_EditorClassIdentifier: 
+  fps: 12
+  sprites:
+  - {fileID: 1454739377, guid: 56b715190a0be8a489f69de1745c06b3, type: 3}
+  - {fileID: 103333904, guid: 56b715190a0be8a489f69de1745c06b3, type: 3}
+  - {fileID: 589087619, guid: 56b715190a0be8a489f69de1745c06b3, type: 3}
+  - {fileID: 41081107, guid: 56b715190a0be8a489f69de1745c06b3, type: 3}
+  - {fileID: 1353638725, guid: 56b715190a0be8a489f69de1745c06b3, type: 3}
+  - {fileID: 1933979437, guid: 56b715190a0be8a489f69de1745c06b3, type: 3}
+  - {fileID: 1905030761, guid: 56b715190a0be8a489f69de1745c06b3, type: 3}
+  - {fileID: -93453167, guid: 56b715190a0be8a489f69de1745c06b3, type: 3}
+  - {fileID: -1900927545, guid: 56b715190a0be8a489f69de1745c06b3, type: 3}

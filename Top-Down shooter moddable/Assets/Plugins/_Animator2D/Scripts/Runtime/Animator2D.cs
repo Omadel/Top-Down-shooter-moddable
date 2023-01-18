@@ -11,19 +11,21 @@ namespace Etienne.Animator2D
         public AnimationState2D NextAnimationState => nextAnimationState;
         public AnimationState2D CurrentAnimationState => currentAnimationState;
         public AnimationState2D PreviousAnimationState => previousAnimationState;
-        public SpriteRenderer Renderer => renderer;
+        public SpriteRenderer Renderer => renderers[0];
+        public int CurrentFrameIndex => currentFrameIndex;
 
         [SerializeField] private AnimatorController2D controller;
         private AnimationState2D currentAnimationState, nextAnimationState, previousAnimationState;
-        private new SpriteRenderer renderer;
+        private List<SpriteRenderer> renderers = new List<SpriteRenderer>();
+        private int currentFrameIndex;
         private Image imageRenderer;
         private Dictionary<string, AnimationState2D> animationStates;
         private Coroutine routine;
 
         private void Start()
         {
-            renderer = GetComponentInChildren<SpriteRenderer>();
-            if (renderer == null) imageRenderer = GetComponentInChildren<Image>();
+            renderers.AddRange(GetComponentsInChildren<SpriteRenderer>(true));
+            if (renderers[0] == null) imageRenderer = GetComponentInChildren<Image>();
             animationStates = new Dictionary<string, AnimationState2D>();
             foreach (AnimationState2D animationState in controller.AnimationStates)
             {
@@ -35,7 +37,7 @@ namespace Etienne.Animator2D
 
         private void OnEnable()
         {
-            if (!Application.isPlaying || renderer == null) return;
+            if (!Application.isPlaying || renderers.Count == 0) return;
             currentAnimationState = controller.AnimationStates[0];
             RestartUpdateRoutine();
         }
@@ -51,11 +53,16 @@ namespace Etienne.Animator2D
             int index = 0;
             while (enabled && Application.isPlaying)
             {
-                if (renderer != null)  yield return new WaitUntil(() => renderer.isVisible);
+                if (Renderer != null) yield return new WaitUntil(() => Renderer.isVisible);
                 Animation2D animation = currentAnimationState.Animation;
+                bool isLayered = animation is LayeredAnimation layeredAnimation;
+                for (int i = 1; i < renderers.Count; i++)
+                {
+                    renderers[i].sprite = null;
+                }
                 if (animation == null)
                 {
-                    renderer.sprite = null;
+                    Renderer.sprite = null;
                     gameObject.SetActive(false);
                     break;
                 }
@@ -68,24 +75,67 @@ namespace Etienne.Animator2D
 
                 float frameTime = 1000 / animation.FPS / 1000f;
                 index %= animation.Sprites.Length;
-                if (renderer == null) imageRenderer.sprite = animation.Sprites[index];
-                else renderer.sprite = animation.Sprites[index];
+                currentFrameIndex = index;
+                if (Renderer == null) imageRenderer.sprite = animation.Sprites[index];
+                else
+                {
+                    SetAnimationToRenderers(renderers, animation, index);
+                }
                 ++index;
                 yield return new WaitForSeconds(frameTime);
             }
         }
 
+        private void SetAnimationToRenderers(List<SpriteRenderer> renderers, Animation2D animation, int index)
+        {
+            bool isLayered = animation is LayeredAnimation;
+            if (!isLayered)
+            {
+                renderers[0].sprite = animation.Sprites[index];
+                for (int i = 1; i < renderers.Count; i++)
+                {
+                    renderers[i].sprite = null;
+                }
+            }
+            else
+            {
+                LayeredAnimation layeredAnimation = animation as LayeredAnimation;
+
+                for (int i = renderers.Count; i < layeredAnimation.Animations.Length; i++)
+                {
+                    Transform go = new GameObject($"AnimationLayer ({i})").transform;
+                    go.SetParent(transform);
+                    go.SetPositionAndRotation(transform.position, transform.rotation);
+                    renderers.Add(go.gameObject.AddComponent<SpriteRenderer>());
+                }
+                var orderInLayer = renderers[0].sortingOrder;
+                for (int i = 0; i < layeredAnimation.Animations.Length; i++)
+                {
+                    var sprite = layeredAnimation.Animations[i] == null ? null : layeredAnimation.Animations[i].Sprites[index];
+                    renderers[i].sprite = sprite;
+                    renderers[i].sortingOrder = orderInLayer + i;
+                }
+            }
+
+        }
+
         public bool FlipY(bool? value = null)
         {
-            bool oldValue = renderer.flipY;
-            renderer.flipY = value ?? !renderer.flipY;
-            return renderer.flipY != oldValue;
+            bool oldValue = Renderer.flipY;
+            foreach (var renderer in renderers)
+            {
+                renderer.flipY = value ?? !renderer.flipY;
+            }
+            return Renderer.flipY != oldValue;
         }
         public bool FlipX(bool? value = null)
         {
-            bool oldValue = renderer.flipX;
-            renderer.flipX = value ?? !renderer.flipX;
-            return renderer.flipX != oldValue;
+            bool oldValue = Renderer.flipX;
+            foreach (var renderer in renderers)
+            {
+                renderer.flipX = value ?? !renderer.flipX;
+            }
+            return Renderer.flipX != oldValue;
         }
 
         public void SetState(string stateName, bool force = false)
@@ -124,13 +174,24 @@ namespace Etienne.Animator2D
                 || animation.Sprites == null
                 || animation.Sprites.Length <= 0
                 || animation.Sprites[0] == null;
-            SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+            List<SpriteRenderer> renderers = new List<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>(true));
             Sprite sprite = isNull ? null : animation.Sprites[0];
-            if (spriteRenderer != null)
+            if (renderers[0] != null)
             {
-                spriteRenderer.sprite = sprite;
+                if (isNull)
+                {
+                    foreach (var renderer in renderers)
+                    {
+                        renderer.sprite = null;
+                    }
+                }
+                else
+                {
+                    SetAnimationToRenderers(renderers, animation, 1);
+                }
             }
-            else GetComponentInChildren<UnityEngine.UI.Image>().sprite = sprite;
+            else GetComponentInChildren<Image>().sprite = sprite;
         }
 #endif
     }
