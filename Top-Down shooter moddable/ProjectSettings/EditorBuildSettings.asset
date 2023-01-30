@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/StartScreen.unity
     guid: 8d9a46ce18f19c34daf5afbbf2c23cce
   - enabled: 1
-    path: Assets/Plugins/MoreMountains/MMTools/Tools/MMSceneLoading/LoadingScreens/LoadingScreen.unity
-    guid: 888394d52616e5e42b3b54c3f2bbd3eb
+    path: Assets/_Project/Scenes/Etienne.unity
+    guid: 9a80ba8dd8bdf55428385efc70ad7881
+  - enabled: 1
+    path: Assets/_Project/Scenes/ModScene.unity
+    guid: 8544416b3322e55419b3d719a4c71963
   m_configObjects: {}

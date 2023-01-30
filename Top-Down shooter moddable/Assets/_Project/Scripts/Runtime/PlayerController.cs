@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour, IHitable, IDestroyable
     public int Health => currentHealth;
     public bool IsTransporting => transportable != null;
     public Transportable Transportable => transportable;
+    public Fruit TransportedFruit => transportable is Fruit fruit ? fruit : null;
 
 
     public float Speed;
@@ -15,13 +16,12 @@ public class PlayerController : MonoBehaviour, IHitable, IDestroyable
     public int WeaponDamage;
     public Vector2 WeaponPositionOffset;
 
-    [SerializeField] int startHealth = 100;
+    [SerializeField] private int startHealth = 100;
     public SpriteRenderer Renderer;
-
-    int currentHealth;
-    List<IHitable> hittedHitables = new List<IHitable>();
-    IInteractable currentInteractable;
-    Transportable transportable;
+    private int currentHealth;
+    private List<IHitable> hittedHitables = new List<IHitable>();
+    private IInteractable currentInteractable;
+    private Transportable transportable;
 
 
     public void Hit(int amount)
@@ -35,6 +35,12 @@ public class PlayerController : MonoBehaviour, IHitable, IDestroyable
 
     internal void Pickup(Transportable transportable)
     {
+        if (this.transportable != null)
+        {
+            Vector2 offsetWeapon = this.WeaponPositionOffset;
+            if (Renderer.flipX) offsetWeapon.x *= -1;
+            PutDown(offsetWeapon);
+        }
         transportable.transform.SetParent(transform);
         transportable.transform.localPosition = Vector3.up * .15f;
         this.transportable = transportable;
@@ -56,12 +62,18 @@ public class PlayerController : MonoBehaviour, IHitable, IDestroyable
         transportable = null;
     }
 
+    internal void Harvest(Soil soil)
+    {
+        Animator.SetState("Dig", true);
+        currentInteractable = soil;
+    }
+
     internal void Sow(Seed seed)
     {
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Renderer = GetComponent<SpriteRenderer>();
         Animator = GetComponent<Animator2D>();
@@ -71,9 +83,9 @@ public class PlayerController : MonoBehaviour, IHitable, IDestroyable
 
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        var offsetWeapon = this.WeaponPositionOffset;
+        Vector2 offsetWeapon = this.WeaponPositionOffset;
         if (Renderer.flipX) offsetWeapon.x *= -1;
 
         if (Animator.GetState() == "Dig")
@@ -93,7 +105,7 @@ public class PlayerController : MonoBehaviour, IHitable, IDestroyable
                 RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position + (Vector3)offsetWeapon, WeaponRadius, Vector3.forward);
                 for (int i = 0; i < hits.Length; i++)
                 {
-                    var hit = hits[i];
+                    RaycastHit2D hit = hits[i];
                     if (hit.collider.gameObject == this.gameObject) continue;
                     if (!hit.collider.TryGetComponent<IHitable>(out IHitable hitable)) continue;
                     if (hittedHitables.Contains(hitable)) continue;
@@ -142,7 +154,7 @@ public class PlayerController : MonoBehaviour, IHitable, IDestroyable
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        var offsetWeapon = this.WeaponPositionOffset;
+        Vector2 offsetWeapon = this.WeaponPositionOffset;
         if (GetComponent<SpriteRenderer>().flipX) offsetWeapon.x *= -1;
         UnityEditor.Handles.DrawWireArc(transform.position + (Vector3)offsetWeapon, Vector3.forward, Vector3.up, 360, WeaponRadius);
     }

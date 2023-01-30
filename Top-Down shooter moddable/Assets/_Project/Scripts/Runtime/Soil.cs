@@ -4,27 +4,27 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Soil : MonoBehaviour, IInteractable
 {
-    PlayerController player => GameManager.Instance.Player;
+    private PlayerController player => GameManager.Instance.Player;
     public bool IsInteractable
     {
         get
         {
-            if (!isInteractable) return false;
-            if (!player.IsTransporting) return true;
-            if (player.Transportable is Seed) return true;
+            if (player.Transportable is Seed) return isDug;
+            if (isInteractable && !player.IsTransporting) return true;
             return false;
         }
     }
 
-    [SerializeField] Sprite normalSprite, dugSprite;
-    [SerializeField] SpriteRenderer fruitRenderer;
+    [SerializeField] private Sprite normalSprite, dugSprite;
+    [SerializeField] private SpriteRenderer fruitRenderer;
+    [SerializeField, ReadOnly] private FruitData fruit;
 
-    bool isDug = false;
-    bool isInteractable = true;
-    new SpriteRenderer renderer;
-
-    Sprite[] stages;
-    float duration;
+    private bool isDug = false;
+    private bool isSew = false;
+    private bool isInteractable = true;
+    private new SpriteRenderer renderer;
+    private Sprite[] stages;
+    private float duration;
 
     private void Start()
     {
@@ -53,9 +53,13 @@ public class Soil : MonoBehaviour, IInteractable
     {
         isInteractable = false;
         PlayerController player = GameManager.Instance.Player;
-        if (player.IsTransporting)
+        if (isSew)
         {
-            var seed = player.Transportable as Seed;
+            player.Harvest(this);
+        }
+        else if (player.IsTransporting)
+        {
+            Seed seed = player.Transportable as Seed;
             player.PutDown(Vector3.zero);
             player.Sow(seed);
             Sow(seed);
@@ -68,12 +72,14 @@ public class Soil : MonoBehaviour, IInteractable
         HideInteraction();
     }
 
-    private void Sow(Seed seed)
+    private void Sow(SeedData seed)
     {
+        isSew = true;
+        fruit = seed.Fruit;
         fruitRenderer.sprite = seed.GrowingStages[0];
         stages = seed.GrowingStages;
         duration = seed.GrowingDuration;
-        var timer = Timer.Create(seed.GrowingDuration).OnUpdate(UpdateFruit).OnComplete(CompleteFruit);
+        Timer timer = Timer.Create(seed.GrowingDuration).OnUpdate(UpdateFruit).OnComplete(CompleteFruit);
         timer.Restart();
     }
 
@@ -81,8 +87,6 @@ public class Soil : MonoBehaviour, IInteractable
     {
         renderer.sprite = normalSprite;
         isInteractable = true;
-        isDug = false;
-        //todo spawn fuit
     }
 
     private void UpdateFruit(float timerValue)
@@ -93,7 +97,24 @@ public class Soil : MonoBehaviour, IInteractable
 
     public void OnInteractionEnded()
     {
-        isDug = true;
-        renderer.sprite = dugSprite;
+        if (!isDug)
+        {
+            isDug = true;
+            renderer.sprite = dugSprite;
+        }
+        else if (isSew)
+        {
+            Harvest();
+        }
+    }
+
+    private void Harvest()
+    {
+        player.Pickup(GameManager.Instance.GetFruit(this.fruit));
+        isSew = false;
+        isDug = false;
+        isInteractable = true;
+        fruitRenderer.sprite = null;
+        renderer.sprite = normalSprite;
     }
 }

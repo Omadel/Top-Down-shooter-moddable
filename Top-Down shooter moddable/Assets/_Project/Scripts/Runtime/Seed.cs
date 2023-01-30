@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Seed : Transportable
 {
-    public float GrowingDuration => growingDuration;
-    public Sprite[] GrowingStages => growingStages;
+    public SeedData Data => data;
+    [SerializeField] SeedData data;
 
-    [SerializeField] float growingDuration = 2f;
-    [SerializeField] Sprite[] growingStages;
+    public static implicit operator SeedData(Seed seed) => seed.Data;
 }
