@@ -63,7 +63,7 @@ public class MapEditor : MonoBehaviour
     public Vector3Int MousePositionToCellPosition()
     {
         Vector3 MousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(MousePosition);
+        //Debug.Log(MousePosition);
         Vector3Int SelectedTile = _TileMap.WorldToCell(MousePosition);
         return SelectedTile;
     }

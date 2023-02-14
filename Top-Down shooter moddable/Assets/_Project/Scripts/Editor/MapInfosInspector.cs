@@ -21,7 +21,7 @@ public class MapInfosInspector : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("Save Map"))
         {
-            mapInfos.SaveData();
+            //mapInfos.SaveData();
         }
         if (GUILayout.Button("Load Map"))
         {
