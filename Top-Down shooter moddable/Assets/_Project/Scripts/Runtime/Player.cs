@@ -98,6 +98,7 @@ public class Player : MonoBehaviour
                 Bullet bullet = bulletRenderer.gameObject.AddComponent<Bullet>();
                 bullet.SetStats(stats.BulletStats[i]);
                 bulletRenderer.sprite = bulletSprite;
+                bullet.transform.position += transform.position;
             }
         }
     }
