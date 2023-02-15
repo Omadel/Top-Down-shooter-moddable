@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.IO;
+using System;
 
 public class MapInfos : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class MapInfos : MonoBehaviour
                 mapData2.tiles.Add(new TileData { x = positions[i].x, y = positions[i].y, index = KeepDigit(Tiles[i].name) -36 });
         }
         string jsonString = JsonUtility.ToJson(mapData2);
-        string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory) + "/Maps";
+        string folderPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/" + Application.productName + "/Maps";
         string fileName = fileN;
         string filePath = folderPath + "/" + fileName;
 
@@ -63,7 +64,7 @@ public class MapInfos : MonoBehaviour
     public void LoadNewMap()
     {
         int version = 0;
-        string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory) + "/Maps";
+        string folderPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/" + Application.productName + "/Maps";
         string fileName = "map";
         string filePath = folderPath + "/" + fileName;
 
@@ -77,7 +78,7 @@ public class MapInfos : MonoBehaviour
         File.WriteAllText(filePath, jsonString);
         foreach (Vector3Int position in MapEditor.Instance.GetTilemap().cellBounds.allPositionsWithin)
         {
-            TileBase tile = MapEditor.Instance._Tiles[0];
+            TileBase tile = MapEditor.Instance._Tiles[14];
             MapEditor.Instance.GetTilemap().SetTile(position, tile);
         }
     }

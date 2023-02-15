@@ -763,6 +763,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300122427}
   m_CullTransparentMesh: 1
+--- !u!1 &331564875 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4524194706078651273, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+    type: 3}
+  m_PrefabInstance: {fileID: 1777898231}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &332252926
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fileDropdown: {fileID: 1918309394}
-  folderPath: /Maps
+  mapFolderPath: /Maps
   fileType: '*.json'
   currentFile: 
   mapInfos: {fileID: 1624757320}
@@ -1511,6 +1517,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179578836}
   m_CullTransparentMesh: 1
+--- !u!1 &1284332395 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7119170328899802892, guid: 49b3acc4e177b4b42af6f6c5dfac35b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1332930048}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1303334267 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
@@ -1532,7 +1544,7 @@ PrefabInstance:
     - target: {fileID: 7119170328899802897, guid: 49b3acc4e177b4b42af6f6c5dfac35b1,
         type: 3}
       propertyPath: _MapSize
-      value: 25
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7119170328899802897, guid: 49b3acc4e177b4b42af6f6c5dfac35b1,
         type: 3}
@@ -1925,12 +1937,27 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1332930048}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1284332395}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17bdc9bb1b6d12c42ababe38aea4dfb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1624757323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284332395}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0393b85799f479344a3fcae96ae6e52e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  zoomSpeed: 5
+  grid: {fileID: 331564875}
 --- !u!1839735485 &1671839716 stripped
 Tilemap:
   m_CorrespondingSourceObject: {fileID: 4524194705587708566, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
@@ -2200,6 +2227,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524194706078651274, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+        type: 3}
+      propertyPath: m_CellSize.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524194706078651274, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+        type: 3}
+      propertyPath: m_CellSize.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
@@ -2534,6 +2571,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5142135549914419504, guid: 60572b7da641acf41ae81c4be227a1c2,
+        type: 3}
+      propertyPath: m_Name
+      value: Cam
+      objectReference: {fileID: 0}
+    - target: {fileID: 5142135549914419504, guid: 60572b7da641acf41ae81c4be227a1c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5888664052080817532, guid: 60572b7da641acf41ae81c4be227a1c2,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2548,6 +2595,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5888664052102028414, guid: 60572b7da641acf41ae81c4be227a1c2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000009536743
       objectReference: {fileID: 0}
     - target: {fileID: 5888664053437169744, guid: 60572b7da641acf41ae81c4be227a1c2,
         type: 3}
@@ -2668,6 +2720,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5893896015039699653, guid: 60572b7da641acf41ae81c4be227a1c2,
+        type: 3}
+      propertyPath: m_text
+      value: Reset Map to center
+      objectReference: {fileID: 0}
+    - target: {fileID: 5893896015039699653, guid: 60572b7da641acf41ae81c4be227a1c2,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 13.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661054779284563950, guid: 60572b7da641acf41ae81c4be227a1c2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1624757323}
+    - target: {fileID: 7661054779284563950, guid: 60572b7da641acf41ae81c4be227a1c2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetCamPos
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661054779284563950, guid: 60572b7da641acf41ae81c4be227a1c2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CamMovement, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661054779284563950, guid: 60572b7da641acf41ae81c4be227a1c2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8885461948132651530, guid: 60572b7da641acf41ae81c4be227a1c2,
         type: 3}
