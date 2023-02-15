@@ -12,7 +12,7 @@ public class WaveHandler : Etienne.Singleton<WaveHandler>
     [SerializeField] private Waves waves;
     private List<Waves.Spawn> leftToSpawn;
     private float waveTimer;
-    private string path;
+    public  string path;
 
     [Serializable]
     public class Waves

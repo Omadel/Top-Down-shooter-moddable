@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -15,6 +16,7 @@ public class Bullet : MonoBehaviour
     [Serializable]
     public class BulletStats
     {
+        public string SpriteName;
         public int Damage = 10;
         public float Speed = 20f;
         public Vector2 Offset = new Vector2(0f, .15f);
@@ -28,6 +30,9 @@ public class Bullet : MonoBehaviour
             transform.position + (Vector3)stats.Offset,
             Quaternion.AngleAxis(stats.Angle, Vector3.forward));
         this.isEnemyFired = isEnemyFired;
+        string spritePath = $"{WaveHandler.Instance.path}/{stats.SpriteName}.png";
+        if (File.Exists(spritePath)) renderer.sprite = Loader.LoadSprite(spritePath);
+        transform.localScale = Vector3.one*.5f;
     }
 
     private void Update()
