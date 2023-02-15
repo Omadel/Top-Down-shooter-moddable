@@ -512,6 +512,7 @@ MonoBehaviour:
       EnemyStatsName: BaseEnemy
     - spawnTime: 2
       EnemyStatsName: BaseEnemy
+  path: 
 --- !u!4 &195357222
 Transform:
   m_ObjectHideFlags: 0
@@ -1070,6 +1071,16 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 4524194705587708566, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+        type: 3}
+      propertyPath: m_TileAnchor.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524194705587708566, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+        type: 3}
+      propertyPath: m_TileAnchor.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4524194706078651273, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
       propertyPath: m_Name
@@ -1078,17 +1089,32 @@ PrefabInstance:
     - target: {fileID: 4524194706078651274, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
       propertyPath: m_CellSize.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4524194706078651274, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
       propertyPath: m_CellSize.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
@@ -1382,7 +1408,8 @@ MonoBehaviour:
     Speed: 5
     FireRate: 0.5
     BulletStats:
-    - Damage: 10
+    - SpriteName: 
+      Damage: 10
       Speed: 10
       Offset: {x: 0, y: 0.15}
       Angle: 0
