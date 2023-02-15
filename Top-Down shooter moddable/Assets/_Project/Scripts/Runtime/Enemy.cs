@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
         public int Health = 20;
         public float Speed = 4f;
         public float FireRate = 1f;
+        public int KamikazeDamage = 50;
         public Bullet.BulletStats[] BulletStats = new Bullet.BulletStats[] { };
         public Vector3[] Path = new Vector3[] { new Vector2(0, 4), new Vector2(0, -4) };
         public string Ease;
@@ -32,6 +33,11 @@ public class Enemy : MonoBehaviour
         if (!File.Exists(path)) File.WriteAllText(path, JsonUtility.ToJson(stats, true));
         else stats = JsonUtility.FromJson<EnemyStats>(File.ReadAllText(path));
         currentHealth = stats.Health;
+        string spritePath = $"{WaveHandler.Instance.path}/{stats.Name}.png";
+        if (stats.Name!="" && File.Exists(spritePath))
+        {
+            GetComponent<SpriteRenderer>().sprite = Loader.LoadSprite(spritePath);
+        }
     }
 
     private void Start()
@@ -80,11 +86,20 @@ public class Enemy : MonoBehaviour
             {
                 SpriteRenderer bulletRenderer = new GameObject("bullet").AddComponent<SpriteRenderer>();
                 Bullet bullet = bulletRenderer.gameObject.AddComponent<Bullet>();
-                bullet.SetStats(stats.BulletStats[i], true);
                 bulletRenderer.sprite = bulletSprite;
+                bullet.SetStats(stats.BulletStats[i], true);
                 bullet.transform.position += transform.position;
                 bullet.gameObject.AddComponent<CircleCollider2D>();
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.TryGetComponent<Player>(out Player player))
+        {
+            player.Hit(stats.KamikazeDamage);
+            GameObject.Destroy(gameObject);
         }
     }
 }

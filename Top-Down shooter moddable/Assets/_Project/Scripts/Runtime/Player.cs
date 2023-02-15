@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -40,12 +41,12 @@ public class Player : MonoBehaviour
 
     private void LoadPlayerSprite(string path)
     {
-        if (File.Exists(path)) GetComponent<SpriteRenderer>().sprite = LoadSprite(path);
+        if (File.Exists(path)) GetComponent<SpriteRenderer>().sprite = Loader.LoadSprite(path);
     }
 
     private void LoadBulletSprite(string path)
     {
-        if (File.Exists(path)) bulletSprite = LoadSprite(path, 32);
+        if (File.Exists(path)) bulletSprite = Loader.LoadSprite(path);
     }
 
     private void LoadPlayerStats(string path)
@@ -53,22 +54,6 @@ public class Player : MonoBehaviour
         if (!File.Exists(path)) File.WriteAllText(path, JsonUtility.ToJson(stats, true));
         else stats = JsonUtility.FromJson<PlayerStats>(File.ReadAllText(path));
         currentHealth = stats.Health;
-    }
-
-    private Sprite LoadSprite(string path, int? pixelsPerUnit = null)
-    {
-        if (!File.Exists(path))
-        {
-            Debug.LogError("No SpriteFound !");
-            return null;
-        }
-        Texture2D spriteTexture = new Texture2D(1, 1);
-        spriteTexture.LoadImage(File.ReadAllBytes(path));
-        spriteTexture.filterMode = FilterMode.Point;
-        if (pixelsPerUnit == null) pixelsPerUnit = Mathf.Max(spriteTexture.width, spriteTexture.height);
-        Sprite sprite = Sprite.Create(spriteTexture, new Rect(0, 0, spriteTexture.width, spriteTexture.height), new Vector2(.5f, .5f), pixelsPerUnit.Value);
-        sprite.name = Path.GetFileNameWithoutExtension(path);
-        return sprite;
     }
 
     private void OnMove(InputValue value)
@@ -98,8 +83,8 @@ public class Player : MonoBehaviour
             {
                 SpriteRenderer bulletRenderer = new GameObject("bullet").AddComponent<SpriteRenderer>();
                 Bullet bullet = bulletRenderer.gameObject.AddComponent<Bullet>();
-                bullet.SetStats(stats.BulletStats[i], false);
                 bulletRenderer.sprite = bulletSprite;
+                bullet.SetStats(stats.BulletStats[i], false);
                 bullet.transform.position += transform.position;
                 bullet.gameObject.AddComponent<CircleCollider2D>();
             }
@@ -121,5 +106,10 @@ public class Player : MonoBehaviour
     {
         WaveHandler.Instance.LooseGame();
         Destroy(gameObject);
+    }
+
+    void OnRetry()
+    {
+        SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
 }
