@@ -506,12 +506,17 @@ MonoBehaviour:
   endGameCanvas: {fileID: 1909286734}
   enemyPrefab: {fileID: 6504450294188451040, guid: e8043ec3153a52243a8a9ee9d29d3f29,
     type: 3}
+  bonusPrefab: {fileID: 7915368282473374848, guid: f77b04e0515e36e4faecdeb28a05eb7a,
+    type: 3}
   waves:
     Spawns:
     - spawnTime: 0
-      EnemyStatsName: BaseEnemy
+      Type: Enemy
+      StatsFileName: BaseEnemy
     - spawnTime: 2
-      EnemyStatsName: BaseEnemy
+      Type: Enemy
+      StatsFileName: BaseEnemy
+  path: 
 --- !u!4 &195357222
 Transform:
   m_ObjectHideFlags: 0
@@ -1382,7 +1387,8 @@ MonoBehaviour:
     Speed: 5
     FireRate: 0.5
     BulletStats:
-    - Damage: 10
+    - SpriteName: 
+      Damage: 10
       Speed: 10
       Offset: {x: 0, y: 0.15}
       Angle: 0
@@ -2228,6 +2234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -2255,6 +2262,7 @@ MonoBehaviour:
     type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!114 &985944482
 MonoBehaviour:
   m_ObjectHideFlags: 0

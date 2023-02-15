@@ -20,10 +20,12 @@ public class HealthBar : MonoBehaviour
         {
             tempslider.value = value01;
             mainslider.DOValue(value01, .2f).SetDelay(.2f);
+            tempslider.fillRect.GetComponent<Image>().color = Color.green;
         }
         else
         {
             mainslider.value = value01;
+            tempslider.fillRect.GetComponent<Image>().color = Color.red;
             tempslider.DOValue(value01, .2f).SetDelay(.2f);
         }
     }

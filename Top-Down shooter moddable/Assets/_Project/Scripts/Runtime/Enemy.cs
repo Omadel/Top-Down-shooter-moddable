@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().sprite = Loader.LoadSprite(spritePath);
         }
+        transform.position = stats.Path[0];
     }
 
     private void Start()
