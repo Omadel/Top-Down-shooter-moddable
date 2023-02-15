@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public EnemyStats Stats=>stats;
+    public EnemyStats Stats => stats;
 
     public event System.Action OnDie;
 
-    [SerializeField] int currentHealth;
+    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private int currentHealth;
     [SerializeField] private EnemyStats stats;
-    [SerializeField] Sprite bulletSprite;
-
-    float shootTimer;
+    [SerializeField] private Sprite bulletSprite;
+    private float shootTimer;
 
     [System.Serializable]
     public class EnemyStats
@@ -36,19 +36,19 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        Ease ease;
-        if (!Enum.TryParse(stats.Ease, out ease))
+        if (!Enum.TryParse(stats.Ease, out Ease ease))
         {
             ease = Ease.Linear;
             Debug.LogWarning($"Ease {stats.Ease} not parsed !");
         }
-        transform.DOPath(stats.Path, stats.Speed).SetSpeedBased(true).SetEase(ease).OnComplete(()=>Destroy(gameObject));
+        transform.DOPath(stats.Path, stats.Speed).SetSpeedBased(true).SetEase(ease).OnComplete(() => Destroy(gameObject));
     }
 
     internal void Hit(int damage)
     {
-       currentHealth -= damage;
-        if (currentHealth<=0)
+        currentHealth -= damage;
+        healthBar.SetValue(currentHealth / (float)stats.Health);
+        if (currentHealth <= 0)
         {
             Die();
         }
