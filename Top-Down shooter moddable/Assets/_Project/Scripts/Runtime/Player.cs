@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private int currentHealth;
     [SerializeField] private PlayerStats stats;
     [SerializeField] private Sprite bulletSprite;
     [SerializeField] private TMPro.TextMeshProUGUI nameTextMesh;
@@ -18,7 +20,6 @@ public class Player : MonoBehaviour
         public int Health = 100;
         public float Speed = 5f;
         public float FireRate = .5f;
-        public int Damage = 10;
         public Bullet.BulletStats[] BulletStats = new Bullet.BulletStats[] { };
 
     }
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour
     {
         if (!File.Exists(path)) File.WriteAllText(path, JsonUtility.ToJson(stats, true));
         else stats = JsonUtility.FromJson<PlayerStats>(File.ReadAllText(path));
+        currentHealth = stats.Health;
     }
 
     private Sprite LoadSprite(string path, int? pixelsPerUnit = null)
@@ -96,10 +98,28 @@ public class Player : MonoBehaviour
             {
                 SpriteRenderer bulletRenderer = new GameObject("bullet").AddComponent<SpriteRenderer>();
                 Bullet bullet = bulletRenderer.gameObject.AddComponent<Bullet>();
-                bullet.SetStats(stats.BulletStats[i]);
+                bullet.SetStats(stats.BulletStats[i], false);
                 bulletRenderer.sprite = bulletSprite;
                 bullet.transform.position += transform.position;
+                bullet.gameObject.AddComponent<CircleCollider2D>();
             }
         }
+    }
+
+    public void Hit(int damage)
+    {
+        if (!enabled) return;
+        currentHealth -= damage;
+        healthBar.SetValue(currentHealth / (float)stats.Health);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        WaveHandler.Instance.LooseGame();
+        Destroy(gameObject);
     }
 }

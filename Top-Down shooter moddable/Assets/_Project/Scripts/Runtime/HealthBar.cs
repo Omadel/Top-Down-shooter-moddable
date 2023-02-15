@@ -1,18 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Slider mainslider, tempslider;
+
+    private void Start()
     {
-        
+        mainslider.value = 1;
+        tempslider.value = 1;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetValue(float value01)
     {
-        
+        mainslider.DOKill();
+        tempslider.DOKill();
+        if (value01 > mainslider.value)
+        {
+            tempslider.value = value01;
+            mainslider.DOValue(value01, .2f).SetDelay(.2f);
+        }
+        else
+        {
+            mainslider.value = value01;
+            tempslider.DOValue(value01, .2f).SetDelay(.2f);
+        }
     }
 }
+
