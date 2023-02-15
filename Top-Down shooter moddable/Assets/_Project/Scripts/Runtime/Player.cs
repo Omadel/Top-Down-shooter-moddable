@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +12,8 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerStats stats;
     [SerializeField] private Sprite bulletSprite;
     [SerializeField] private TMPro.TextMeshProUGUI nameTextMesh;
+    private float currentFireRate;
+    private Bullet.BulletStats[] currentBulletStats;
     private Vector2 direction;
     private float shootTimer;
 
@@ -54,6 +57,8 @@ public class Player : MonoBehaviour
         if (!File.Exists(path)) File.WriteAllText(path, JsonUtility.ToJson(stats, true));
         else stats = JsonUtility.FromJson<PlayerStats>(File.ReadAllText(path));
         currentHealth = stats.Health;
+        currentBulletStats = stats.BulletStats;
+        currentFireRate = stats.FireRate;
     }
 
     private void OnMove(InputValue value)
@@ -76,15 +81,15 @@ public class Player : MonoBehaviour
     private void HandleSpawnBullet(float deltaTime)
     {
         shootTimer += deltaTime;
-        if (shootTimer >= stats.FireRate)
+        if (shootTimer >= currentFireRate)
         {
-            shootTimer -= stats.FireRate;
-            for (int i = 0; i < stats.BulletStats.Length; i++)
+            shootTimer -= currentFireRate;
+            for (int i = 0; i < currentBulletStats.Length; i++)
             {
                 SpriteRenderer bulletRenderer = new GameObject("bullet").AddComponent<SpriteRenderer>();
                 Bullet bullet = bulletRenderer.gameObject.AddComponent<Bullet>();
                 bulletRenderer.sprite = bulletSprite;
-                bullet.SetStats(stats.BulletStats[i], false);
+                bullet.SetStats(currentBulletStats[i], false);
                 bullet.transform.position += transform.position;
                 bullet.gameObject.AddComponent<CircleCollider2D>();
             }
@@ -108,8 +113,37 @@ public class Player : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnRetry()
+    private void OnRetry()
     {
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
+    }
+
+    internal void ApplyBonus(Bonus.BonusStats stats)
+    {
+        if (stats.IsPermanent)
+        {
+            this.stats.Health += stats.Health;
+            Hit(-stats.Health);
+            this.stats.Speed += stats.Speed;
+            if (stats.FireRate > 0) currentFireRate = stats.FireRate;
+            if (stats.BulletStats.Length != 0) currentBulletStats = stats.BulletStats;
+        }
+        else
+        {
+            StartCoroutine(TemporaryBonus(stats));
+        }
+    }
+
+    private IEnumerator TemporaryBonus(Bonus.BonusStats stats)
+    {
+        Hit(-stats.Health);
+        this.stats.Speed += stats.Speed;
+        if (stats.BulletStats.Length != 0) currentBulletStats = stats.BulletStats;
+        if (stats.FireRate > 0) currentFireRate = stats.FireRate;
+        yield return new WaitForSeconds(stats.Duration);
+        Hit(stats.Health);
+        this.stats.Speed -= stats.Speed;
+        if (stats.BulletStats.Length != 0) currentBulletStats = this.stats.BulletStats;
+        currentFireRate = this.stats.FireRate;
     }
 }

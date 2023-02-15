@@ -9,10 +9,11 @@ public class WaveHandler : Etienne.Singleton<WaveHandler>
 {
     [SerializeField] private CanvasGroup endGameCanvas;
     [SerializeField] private Enemy enemyPrefab;
+    [SerializeField] private Bonus bonusPrefab;
     [SerializeField] private Waves waves;
     private List<Waves.Spawn> leftToSpawn;
     private float waveTimer;
-    public  string path;
+    public string path;
 
     [Serializable]
     public class Waves
@@ -23,7 +24,14 @@ public class WaveHandler : Etienne.Singleton<WaveHandler>
         public class Spawn
         {
             public float spawnTime;
-            public string EnemyStatsName;
+            public Spawned[] spawneds;
+
+            [Serializable]
+            public struct Spawned
+            {
+                public string Type;
+                public string StatsFileName;
+            }
         }
     }
     protected override void Awake()
@@ -63,15 +71,35 @@ public class WaveHandler : Etienne.Singleton<WaveHandler>
 
     private void SpawnEnemy(Waves.Spawn spawn, bool isLast)
     {
-        Enemy enemy = GameObject.Instantiate(enemyPrefab);
-        string enemyPath = $"{path}/{spawn.EnemyStatsName}.json";
-        if (!File.Exists(enemyPath))
+        foreach (Waves.Spawn.Spawned spawned in spawn.spawneds)
         {
-            string json = JsonUtility.ToJson(enemyPrefab.Stats, true);
-            File.WriteAllText(enemyPath, json);
+            string path = $"{this.path}/{spawned.StatsFileName}.json";
+
+            Type type = Type.GetType(spawned.Type);
+            if (type == null) continue;
+            if (type == typeof(Enemy))
+            {
+                if (!File.Exists(path))
+                {
+                    string json = JsonUtility.ToJson(enemyPrefab.Stats, true);
+                    File.WriteAllText(path, json);
+                }
+                Enemy enemy = GameObject.Instantiate(enemyPrefab);
+                enemy.LoadEnemyStats(path);
+                if (isLast) enemy.OnDie += WinGame;
+
+            }
+            else if (type == typeof(Bonus))
+            {
+                if (!File.Exists(path))
+                {
+                    string json = JsonUtility.ToJson(bonusPrefab.Stats, true);
+                    File.WriteAllText(path, json);
+                }
+                Bonus bonus = GameObject.Instantiate(bonusPrefab);
+                bonus.LoadStats(path);
+            }
         }
-        enemy.LoadEnemyStats(enemyPath);
-        if (isLast) enemy.OnDie += WinGame;
     }
 
     private void WinGame()

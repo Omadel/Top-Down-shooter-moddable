@@ -14,13 +14,14 @@ public class Bullet : MonoBehaviour
     }
 
     [Serializable]
-    public class BulletStats
+    public struct BulletStats
     {
         public string SpriteName;
-        public int Damage = 10;
-        public float Speed = 20f;
-        public Vector2 Offset = new Vector2(0f, .15f);
-        public float Angle = 0;
+        public int Damage;
+        public float Speed;
+        public Vector2 Offset;
+        public float Angle;
+
     }
 
     internal void SetStats(BulletStats stats, bool isEnemyFired)
