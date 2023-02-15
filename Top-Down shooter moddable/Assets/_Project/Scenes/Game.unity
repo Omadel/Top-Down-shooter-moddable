@@ -1087,17 +1087,27 @@ PrefabInstance:
     - target: {fileID: 4524194706078651274, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
       propertyPath: m_CellSize.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4524194706078651274, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
       propertyPath: m_CellSize.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4524194706078651275, guid: 6579cc853f35ec54aaf02c8a3d8a3227,
         type: 3}
@@ -2238,7 +2248,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -2266,7 +2275,6 @@ MonoBehaviour:
     type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
 --- !u!114 &985944482
 MonoBehaviour:
   m_ObjectHideFlags: 0
