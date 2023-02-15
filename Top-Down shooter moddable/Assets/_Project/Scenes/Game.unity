@@ -511,11 +511,15 @@ MonoBehaviour:
   waves:
     Spawns:
     - spawnTime: 0
-      Type: Enemy
-      StatsFileName: BaseEnemy
-    - spawnTime: 2
-      Type: Enemy
-      StatsFileName: BaseEnemy
+      spawneds:
+      - Type: Bonus
+        StatsFileName: HealthBonus
+      - Type: Enemy
+        StatsFileName: BaseEnemy
+    - spawnTime: 5
+      spawneds:
+      - Type: Enemy
+        StatsFileName: BaseEnemy
   path: 
 --- !u!4 &195357222
 Transform:
