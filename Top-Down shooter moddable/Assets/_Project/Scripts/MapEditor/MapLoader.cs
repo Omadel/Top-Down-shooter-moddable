@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
-using UnityEngine.Tilemaps;
+
 using TMPro;
 using System;
 
@@ -17,6 +17,7 @@ public class MapLoader : MonoBehaviour
     public MapInfos mapInfos;
     public GameObject MapEditorPrefab;
     public GameObject MenuCanvas;
+    public GameObject Grid;
     string currentFileFullPath;
     public TMP_InputField InputField;
 
@@ -65,10 +66,11 @@ public class MapLoader : MonoBehaviour
     public void LoadMap()
     {
         MapEditorPrefab.SetActive(true);
-        MenuCanvas.SetActive(false);
+        //MenuCanvas.SetActive(false);
         
         mapInfos.LoadMap(currentFileFullPath);
         currentFile = currentFileFullPath;
+
     }
     public void LoadNewMap()
     {
@@ -99,6 +101,10 @@ public class MapLoader : MonoBehaviour
         fileDropdown.AddOptions(options);
 
     }
+    public void Back()
+    {
+       
+    }
     public void SaveMap()
     {
         mapInfos.SaveData(fileDropdown.captionText.text);
@@ -111,6 +117,30 @@ public class MapLoader : MonoBehaviour
         string newPath = path + mapFolderPath + "/" + newFileName + ".json";
         File.Move(currentFileFullPath, newPath);
         if (File.Exists(oldFile)) File.Delete(oldFile);
+
+        path = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/" + Application.productName; ;
+        string mapPath = path + mapFolderPath;
+        // Get a list of all the files with the specified file type in the folder
+        string[] files = Directory.GetFiles(mapPath, fileType);
+
+        // Create an array of just the file names without the path
+        string[] fileNames = new string[files.Length];
+        for (int i = 0; i < files.Length; i++)
+        {
+            fileNames[i] = Path.GetFileName(files[i]);
+        }
+
+        // Create a list of Dropdown.OptionData objects from the file names
+        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+        foreach (string fileName in fileNames)
+        {
+            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(fileName);
+            options.Add(option);
+        }
+
+        // Set the options for the dropdown
+        fileDropdown.ClearOptions();
+        fileDropdown.AddOptions(options);
     }
 
 }

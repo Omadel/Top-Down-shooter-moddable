@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Project/Scenes/MapEditor.unity
-    guid: bcee839f92979e848a147d2c6daf4b3f
-  - enabled: 1
     path: Assets/_Project/Scenes/Game.unity
     guid: a850bd17f767bf74bbd9a5d4d021ae80
+  - enabled: 1
+    path: Assets/_Project/Scenes/MenuMapEditor.unity
+    guid: bc15e6c187c5aa540a06b1b632c7819d
   m_configObjects: {}

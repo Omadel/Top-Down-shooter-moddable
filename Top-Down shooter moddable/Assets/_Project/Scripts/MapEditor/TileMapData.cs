@@ -69,6 +69,7 @@ public class TileMapData : MonoBehaviour
     }
     public void LoadMap()
     {
+        currentFile = path + mapFolderPath + "/" + fileDropdown.captionText.text;
         string jsonString = File.ReadAllText(currentFile);
         MapData mapData2 = JsonUtility.FromJson<MapData>(jsonString);
         foreach (TileData tileData in mapData2.tiles)
