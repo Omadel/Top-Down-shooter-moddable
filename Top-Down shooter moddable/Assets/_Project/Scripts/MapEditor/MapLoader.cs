@@ -10,7 +10,7 @@ using System;
 public class MapLoader : MonoBehaviour
 {
     public TMP_Dropdown fileDropdown;
-    string path = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/" + Application.productName;
+    string path;
     public string mapFolderPath = "/Maps";
     public string fileType = "*.json";
     public string currentFile;
@@ -26,7 +26,7 @@ public class MapLoader : MonoBehaviour
 
     void Start()
     {
-        path = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/" + Application.productName; ;
+        path = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/" + Application.productName;
         string mapPath =  path  + mapFolderPath;
         Debug.Log(mapPath);
         if (!Directory.Exists(mapPath))

@@ -141,7 +141,6 @@ public class Player : MonoBehaviour
         if (stats.BulletStats.Length != 0) currentBulletStats = stats.BulletStats;
         if (stats.FireRate > 0) currentFireRate = stats.FireRate;
         yield return new WaitForSeconds(stats.Duration);
-        Hit(stats.Health);
         this.stats.Speed -= stats.Speed;
         if (stats.BulletStats.Length != 0) currentBulletStats = this.stats.BulletStats;
         currentFireRate = this.stats.FireRate;
